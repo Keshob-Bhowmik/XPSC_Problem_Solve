@@ -1,0 +1,31 @@
+class Solution {
+    void fun(vector<int>& nums,vector<int>& v,set<vector<int>>& ans,int frq[],int x){
+        for(int i=x;i<nums.size();i++){
+            if(frq[i]==0){
+                frq[i]=1;
+                v.push_back(nums[i]);
+                ans.insert(v);
+                fun(nums,v,ans,frq,i+1);
+                v.pop_back();
+                frq[i]=0;
+            }
+        }
+    }
+public:
+    vector<vector<int>> subsetsWithDup(vector<int>& nums) {
+        set<vector<int>> ans;
+        sort(nums.begin(),nums.end());
+        vector<int> v;
+        int frq[nums.size()];
+        for(int i=0;i<nums.size();i++){
+            frq[i]=0;
+        }
+        fun(nums,v,ans,frq,0);
+        vector<vector<int>> ans2;
+        ans.insert(v);
+        for(auto x:ans){
+            ans2.push_back(x);
+        }
+        return ans2;
+    }
+};
